@@ -46,22 +46,22 @@ class Add(QWidget):
         self.push = push
 
     def connect(self):
-        name = f'{self.name.text()} name'
-        degree = f'{self.degree.text()} degree'
-        ground = f'{self.ground.text()} ground'
-        description = f'{self.description.text()} description'
-        price = f'{self.price.text()} price'
-        volume = f'{self.volume.text()} volume'
+        name = f'{self.name.text()}|name'
+        degree = f'{self.degree.text()}|degree'
+        ground = f'{self.ground.text()}|ground'
+        description = f'{self.description.text()}|description'
+        price = f'{self.price.text()}|price'
+        volume = f'{self.volume.text()}|volume'
         if self.push == 'Добавить':
             self.cur.execute('''INSERT INTO 
                                 Espresso(name, degree, ground, description, price, volume) 
                                 VALUES (?, ?, ?, ?, ?, ?)''',
-                                (name.split()[0], degree.split()[0], ground.split()[0], description.split()[0],
-                                 price.split()[0], volume.split()[0])).fetchall()
+                             (name.split('|')[0], degree.split('|')[0], ground.split('|')[0],
+                              description.split('|')[0], price.split('|')[0], volume.split('|')[0])).fetchall()
         else:
             id = self.id.text()
             for i in (name, degree, ground, description, price, volume):
-                b = i.split()[0]
+                b = i.split('|')[0]
                 if str(b).endswith('*'):
                     sat = b[:len(b) - 1]
                     abc = i.split()[1]
